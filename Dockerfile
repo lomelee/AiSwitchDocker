@@ -3,7 +3,7 @@ MAINTAINER Allen lee <icerleer@qq.com>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
 
-RUN git clone https://github.com/lomelee/AiSwitch /usr/src/freeswitch/
+RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
 RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
 RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
 RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
@@ -41,9 +41,9 @@ RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACK
 RUN cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install
 RUN cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
 
-RUN cd /usr/src/freeswitch && ./bootstrap.sh -j
-RUN cd /usr/src/freeswitch && ./configure
-RUN cd /usr/src/freeswitch && make -j`nproc` && make install
+RUN cd /usr/src/AiSwitch && ./bootstrap.sh -j
+RUN cd /usr/src/AiSwitch && ./configure
+RUN cd /usr/src/AiSwitch && make -j`nproc` && make install
 
 
 # explicitly set user/group IDs
@@ -100,7 +100,7 @@ VOLUME ["/tmp"]
 
 
 # Limits Configuration
-COPY    build/freeswitch.limits.conf /etc/security/limits.d/
+COPY    build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
 SHELL       ["/bin/bash"]
