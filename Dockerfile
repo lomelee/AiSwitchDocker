@@ -3,7 +3,7 @@ MAINTAINER Allen lee <icerleer@qq.com>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
 
-RUN git clone https://github.com/lomelee/AiSwitch /usr/src/freeswitch
+RUN git clone https://github.com/lomelee/AiSwitch /usr/src/freeswitch/
 RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
 RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
 RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
