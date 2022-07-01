@@ -29,9 +29,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     # mod_sndfile
     libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
     # mod_shout(mp3)
-    libshout3-dev libmpg123-dev libmp3lame-dev \
-    # del cache
-    && rm -rf /var/lib/apt/lists/*
+    libshout3-dev libmpg123-dev libmp3lame-dev 
 
 
 RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch 
