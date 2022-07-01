@@ -1,7 +1,9 @@
 FROM debian:bullseye
-MAINTAINER Allen lee <icerleer@qq.com>
+LABEL Allen lee <icerleer@qq.com>
 
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install -–no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive \
+    apt-get update \
+    && apt-get -yq install --no-install-recommends \
 # git
     git-core \
 # build
