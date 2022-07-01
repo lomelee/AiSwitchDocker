@@ -1,7 +1,7 @@
 FROM debian:bullseye
 MAINTAINER Allen lee <icerleer@qq.com>
 
-# RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
 
 RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
 RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
