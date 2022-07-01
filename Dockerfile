@@ -49,21 +49,21 @@ RUN cd /usr/src/AiSwitch && ./configure
 RUN cd /usr/src/AiSwitch && make -j`nproc` && make install
 
 
-# explicitly set user/group IDs
-RUN groupadd -r freeswitch --gid=999 && useradd -r -g freeswitch --uid=999 freeswitch
+# # explicitly set user/group IDs
+# RUN groupadd -r freeswitch --gid=999 && useradd -r -g freeswitch --uid=999 freeswitch
 
-# grab gosu for easy step-down from root
-RUN apt-get update && apt-get install -y --no-install-recommends dirmngr gnupg2 ca-certificates wget \
-    && gpg2 --keyserver hkp://keyserver.ubuntu.com --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
-    && gpg2 --keyserver hkp://keyserver.ubuntu.com --recv-keys 655DA1341B5207915210AFE936B4249FA7B0FB03 \
-    && gpg2 --output /usr/share/keyrings/signalwire-freeswitch-repo.gpg --export 655DA1341B5207915210AFE936B4249FA7B0FB03 \
-    && rm -rf /var/lib/apt/lists/* \
-    && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
-    && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture).asc" \
-    && gpg --verify /usr/local/bin/gosu.asc \
-    && rm /usr/local/bin/gosu.asc \
-    && chmod +x /usr/local/bin/gosu \
-    && apt-get purge -y --auto-remove ca-certificates wget dirmngr gnupg2
+# # grab gosu for easy step-down from root
+# RUN apt-get update && apt-get install -y --no-install-recommends dirmngr gnupg2 ca-certificates wget \
+#     && gpg2 --keyserver hkp://keyserver.ubuntu.com --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+#     && gpg2 --keyserver hkp://keyserver.ubuntu.com --recv-keys 655DA1341B5207915210AFE936B4249FA7B0FB03 \
+#     && gpg2 --output /usr/share/keyrings/signalwire-freeswitch-repo.gpg --export 655DA1341B5207915210AFE936B4249FA7B0FB03 \
+#     && rm -rf /var/lib/apt/lists/* \
+#     && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
+#     && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture).asc" \
+#     && gpg --verify /usr/local/bin/gosu.asc \
+#     && rm /usr/local/bin/gosu.asc \
+#     && chmod +x /usr/local/bin/gosu \
+#     && apt-get purge -y --auto-remove ca-certificates wget dirmngr gnupg2
 
 # make the "en_US.UTF-8" locale so freeswitch will be utf-8 enabled by default
 RUN apt-get update && apt-get install -y locales \
@@ -83,6 +83,8 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 # cleanup source files
 RUN rm -rf /usr/src/*
 
+# dir 
+# RUN chmod -R 755 /usr/local/freeswitch
 
 ## Ports
 # Open the container up to the world.
@@ -107,13 +109,13 @@ VOLUME ["/tmp"]
 COPY    build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
-SHELL       ["/bin/bash"]
-HEALTHCHECK --interval=15s --timeout=5s \
-    CMD  /usr/local/freeswitch/bin/fs_cli -x status | grep -q ^UP || exit 1
+# SHELL       ["/bin/bash"]
+# HEALTHCHECK --interval=15s --timeout=5s \
+#     CMD  /usr/local/freeswitch/bin/fs_cli -x status | grep -q ^UP || exit 1
 
-# copy entrypoint
-COPY docker-entrypoint.sh /
-# set entrypoint
-ENTRYPOINT ["/docker-entrypoint.sh"]
-# set args
-CMD ["freeswitch"]
+# # copy entrypoint
+# COPY docker-entrypoint.sh /
+# # set entrypoint
+# ENTRYPOINT ["/docker-entrypoint.sh"]
+# # set args
+# CMD ["freeswitch"]
