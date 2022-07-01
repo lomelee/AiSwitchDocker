@@ -4,33 +4,33 @@ LABEL Allen lee <icerleer@qq.com>
 RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
     && apt-get -yq install --no-install-recommends \
-# git
+    # git
     git-core \
-# build
+    # build
     build-essential cmake automake autoconf 'libtool-bin|libtool' pkg-config \
-# general # erlang-dev
+    # general # erlang-dev
     libssl-dev zlib1g-dev libdb-dev unixodbc-dev libncurses5-dev libexpat1-dev libgdbm-dev bison  libtpl-dev libtiff5-dev uuid-dev \
-# core
+    # core
     libpcre3-dev libedit-dev libsqlite3-dev libcurl4-openssl-dev nasm \
-# core codecs
+    # core codecs
     libogg-dev libspeex-dev libspeexdsp-dev \
-# mod_enum
+    # mod_enum
     libldns-dev \
-# mod_python3
-#     python3-dev \
-# mod_av
+    # mod_python3
+    # python3-dev \
+    # mod_av
     libavformat-dev libswscale-dev libavresample-dev \
-# mod_lua
+    # mod_lua
     liblua5.2-dev \
-# mod_opus
+    # mod_opus
     libopus-dev \
-# mod_pgsql
+    # mod_pgsql
     libpq-dev \
-# mod_sndfile
+    # mod_sndfile
     libsndfile1-dev libflac-dev libogg-dev libvorbis-dev \
-# mod_shout(mp3)
+    # mod_shout(mp3)
     libshout3-dev libmpg123-dev libmp3lame-dev \
-# del cache
+    # del cache
     && rm -rf /var/lib/apt/lists/*
 
 
@@ -71,18 +71,18 @@ ENV LANG en_US.utf8
 # Open the container up to the world.
 ### 8021 fs_cli, 5060 5061 5080 5081 sip and sips, 64535-65535 rtp
 EXPOSE 8021/tcp \ 
-       5060/tcp 5060/udp 5080/tcp 5080/udp \
-       5061/tcp 5061/udp 5081/tcp 5081/udp \
-       7443/tcp \
-       5070/udp 5070/tcp \
-       64535-65535/udp \
-       16384-32768/udp
+    5060/tcp 5060/udp 5080/tcp 5080/udp \
+    5061/tcp 5061/udp 5081/tcp 5081/udp \
+    7443/tcp \
+    5070/udp 5070/tcp \
+    64535-65535/udp \
+    16384-32768/udp
 
 
 # Volumes
 ## Freeswitch Configuration ## Tmp so we can get core dumps out
 VOLUME ["/usr/local/freeswitch/conf"] \ 
-       ["/tmp"]
+    ["/tmp"]
 
 
 # Limits Configuration
