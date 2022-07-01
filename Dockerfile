@@ -51,22 +51,6 @@ RUN apt-get update && apt-get install -y locales \
     && rm -rf /var/lib/apt/lists/*
 ENV LANG en_US.utf8
 
-# Cleanup build tools
-# RUN apt-get purge -y --auto-remove git build-essential cmake automake autoconf pkg-config 'libtool-bin|libtool'
-# RUN apt-get purge -y --auto-remove git 
-
-# Cleanup other package
-# RUN apt-get autoremove
-
-# Cleanup the image
-# RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# cleanup source files
-# RUN rm -rf /usr/src/*
-
-# dir 
-# RUN chmod -R 755 /usr/local/freeswitch
-
 ## Ports
 # Open the container up to the world.
 ### 8021 fs_cli, 5060 5061 5080 5081 sip and sips, 64535-65535 rtp
