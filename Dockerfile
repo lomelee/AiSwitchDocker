@@ -8,10 +8,13 @@ RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
 RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
 RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
 
-# add depend
+# add build tool depend
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-install-recommends \
     # build
-    build-essential cmake automake autoconf 'libtool-bin|libtool' pkg-config \
+    build-essential cmake automake autoconf 'libtool-bin|libtool' pkg-config
+
+# add runtime depend
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-install-recommends \
     # general # erlang-dev
     libssl-dev zlib1g-dev libdb-dev unixodbc-dev libncurses5-dev libexpat1-dev libgdbm-dev bison  libtpl-dev libtiff5-dev uuid-dev \
     # core
@@ -82,13 +85,13 @@ VOLUME ["/usr/local/freeswitch/conf"] \
 COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
-# SHELL       ["/bin/bash"]
-# HEALTHCHECK --interval=15s --timeout=5s \
-#     CMD  /usr/local/freeswitch/bin/fs_cli -x status | grep -q ^UP || exit 1
+SHELL       ["/bin/bash"]
+HEALTHCHECK --interval=15s --timeout=5s \
+    CMD  fs_cli -x status | grep -q ^UP || exit 1
 
-# # copy entrypoint
-# COPY docker-entrypoint.sh /
-# # set entrypoint
-# ENTRYPOINT ["/docker-entrypoint.sh"]
-# # set args
-# CMD ["freeswitch"]
+# copy entrypoint
+COPY docker-entrypoint.sh /
+# set entrypoint
+ENTRYPOINT ["/docker-entrypoint.sh"]
+# set args
+CMD ["freeswitch"]
