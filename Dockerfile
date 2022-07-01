@@ -113,7 +113,7 @@ COPY    build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 # copy entrypoint
 COPY docker-entrypoint.sh /
 # set entrypoint
-# ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # # set args
 # CMD ["freeswitch"]
