@@ -34,10 +34,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks \
+RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch \
+    && git clone https://github.com/signalwire/libks /usr/src/libs/libks \
     && git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip \
-    && git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp \
-    && git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
+    && git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
+
 
 # build source 
 RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRACE=1 && make install \
