@@ -3,10 +3,12 @@ MAINTAINER Allen lee <icerleer@qq.com>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -yq install git
 
-RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
+RUN git clone https://github.com/signalwire/freeswitch -b v1.10 /usr/src/AiSwitch
 RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
 RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
 RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
+RUN git clone https://github.com/signalwire/signalwire-c /usr/src/libs/signalwire-c
+
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install \
 # build
@@ -39,8 +41,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install \
 RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRACE=1 && make install
 RUN cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install
 RUN cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
+RUN cd /usr/src/libs/signalwire-c && PKG_CONFIG_PATH=/usr/lib/pkgconfig cmake . -DCMAKE_INSTALL_PREFIX=/usr && make install
 
-RUN cd /usr/src/AiSwitch && chmod a+x ./bootstrap.sh && ./bootstrap.sh -j
+RUN cd /usr/src/AiSwitch && ./bootstrap.sh -j
 RUN cd /usr/src/AiSwitch && ./configure
 RUN cd /usr/src/AiSwitch && make -j`nproc` && make install
 
