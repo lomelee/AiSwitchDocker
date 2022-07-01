@@ -43,7 +43,7 @@ RUN cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb
 RUN cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
 #RUN cd /usr/src/libs/signalwire-c && PKG_CONFIG_PATH=/usr/lib/pkgconfig cmake . -DCMAKE_INSTALL_PREFIX=/usr && make install
 
-RUN chomd -R +x /usr/src/AiSwitch
+RUN chmod -R +x /usr/src/AiSwitch
 RUN cd /usr/src/AiSwitch && ./bootstrap.sh -j
 RUN cd /usr/src/AiSwitch && ./configure
 RUN cd /usr/src/AiSwitch && make -j`nproc` && make install
