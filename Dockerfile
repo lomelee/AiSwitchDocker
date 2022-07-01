@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bullseye AS FirstBuildStep
 LABEL Allen lee <icerleer@qq.com>
 
 RUN DEBIAN_FRONTEND=noninteractive \
@@ -34,10 +34,10 @@ RUN DEBIAN_FRONTEND=noninteractive \
     && rm -rf /var/lib/apt/lists/*
 
 
-RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch \
-    && git clone https://github.com/signalwire/libks /usr/src/libs/libks \
-    && git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip \
-    && git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
+RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch 
+RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks 
+RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip 
+RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
 
 
 # build source 
@@ -45,6 +45,17 @@ RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACK
     && cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install \
     && cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install \
     && chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
+
+
+FROM debian:bullseye AS SecondBuildStep
+
+#copy lib and bin
+COPY --from=FirstBuildStep /usr/lib/lib* /usr/lib/
+COPY --from=FirstBuildStep /usr/local/freeswitch /usr/local/freeswitch
+
+# set file link
+RUN ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
+    && ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/
 
 # set time locale
 RUN apt-get update && apt-get install -y locales \
