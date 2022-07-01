@@ -72,7 +72,7 @@ ENV LANG en_US.utf8
 
 # Cleanup build tools
 # RUN apt-get purge -y --auto-remove git build-essential cmake automake autoconf pkg-config 'libtool-bin|libtool'
-RUN apt-get purge -y --auto-remove git cmake automake autoconf pkg-config 
+# RUN apt-get purge -y --auto-remove git 
 
 # Cleanup other package
 # RUN apt-get autoremove
