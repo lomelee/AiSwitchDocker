@@ -48,6 +48,7 @@ FROM debian:bullseye AS SecondBuildStep
 #copy lib and bin
 COPY --from=FirstBuildStep /usr/lib/lib* /usr/lib/
 COPY --from=FirstBuildStep /usr/local/freeswitch /usr/local/freeswitch
+COPY --from=FirstBuildStep /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 
 # set file link
 RUN ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \

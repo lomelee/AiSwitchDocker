@@ -35,5 +35,6 @@ jobs:
         with:
           context: .
           push: true
+          # $(date +%s)
           tags: icerleer/aiswitch:latest
 
