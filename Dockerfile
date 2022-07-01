@@ -1,11 +1,15 @@
 FROM debian:bullseye AS FirstBuildStep
-LABEL Allen lee <icerleer@qq.com>
+LABEL Author="Allen lee"
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt-get update \
-    && apt-get -yq install --no-install-recommends \
-    # git
-    git \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install git-core
+
+RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch
+RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks
+RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip
+RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
+
+# add depend
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get -yq install --no-install-recommends \
     # build
     build-essential cmake automake autoconf 'libtool-bin|libtool' pkg-config \
     # general # erlang-dev
@@ -32,17 +36,11 @@ RUN DEBIAN_FRONTEND=noninteractive \
     libshout3-dev libmpg123-dev libmp3lame-dev 
 
 
-RUN git clone https://github.com/lomelee/AiSwitch /usr/src/AiSwitch 
-RUN git clone https://github.com/signalwire/libks /usr/src/libs/libks 
-RUN git clone https://github.com/freeswitch/sofia-sip /usr/src/libs/sofia-sip 
-RUN git clone https://github.com/freeswitch/spandsp /usr/src/libs/spandsp
-
-
-# build source 
-RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRACE=1 && make install \
-    && cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install \
-    && cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install \
-    && chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
+# build from source 
+RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACKTRACE=1 && make install 
+RUN cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install
+RUN cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
+RUN chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
 
 
 FROM debian:bullseye AS SecondBuildStep
