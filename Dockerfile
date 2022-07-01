@@ -5,7 +5,7 @@ RUN DEBIAN_FRONTEND=noninteractive \
     apt-get update \
     && apt-get -yq install --no-install-recommends \
     # git
-    git-core \
+    git \
     # build
     build-essential cmake automake autoconf 'libtool-bin|libtool' pkg-config \
     # general # erlang-dev
