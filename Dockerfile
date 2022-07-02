@@ -4,6 +4,7 @@ FROM debian:bullseye
 COPY --from=icerleer/aisbase:latest /usr/lib/lib* /usr/lib/
 COPY --from=icerleer/aisbase:latest /usr/local/freeswitch /usr/local/freeswitch
 COPY --from=icerleer/aisbase:latest /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
+COPY --from=icerleer/aisbase:latest /lib/x86_64-linux-gnu /lib/x86_64-linux-gnu
 
 # set file link
 RUN ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
@@ -24,22 +25,22 @@ RUN mv /usr/local/freeswitch/.conf /usr/local/freeswitch/conf
 
 ## Ports
 # Open the container up to the world.
-### 8021 fs_cli, 5060 5061 5080 5081 sip and sips, 64535-65535 rtp
-# EXPOSE 8021/tcp \ 
-#     5060/tcp 5060/udp 5080/tcp 5080/udp \
-#     5061/tcp 5061/udp 5081/tcp 5081/udp \
-#     7443/tcp \
-#     5070/udp 5070/tcp \
-#     64535-65535/udp \
-#     16384-32768/udp
+### 8021 ESL, 
+## 5060 (SIP for default Internal Profile)
+## 5080 (SIP for external Profile)
+## 5070 (SIP for 'NAT' Profile)
+## 16384-32768/udp (For RTP)
+## 5066, 7443 (ws and wss)
+EXPOSE 5060/tcp 5060/udp
 
 # Volumes
-## Freeswitch Configuration ## Tmp so we can get core dumps out
-# VOLUME ["/usr/local/freeswitch/conf"]
-# VOLUME ["/tmp"]
+## Freeswitch Configuration 
+VOLUME ["/usr/local/freeswitch/conf"]
+## Tmp so we can get core dumps out
+# VOLUME ["Tmp"]
 
-# # Limits Configuration
-# COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
+# Limits Configuration
+COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # # Healthcheck to make sure the service is running
 # SHELL       ["/bin/bash"]
