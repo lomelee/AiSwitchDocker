@@ -44,6 +44,7 @@ RUN cd /usr/src/libs/libks && cmake . -DCMAKE_INSTALL_PREFIX=/usr -DWITH_LIBBACK
 RUN cd /usr/src/libs/sofia-sip && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --with-glib=no --without-doxygen --disable-stun --prefix=/usr && make -j`nproc --all` && make install
 RUN cd /usr/src/libs/spandsp && ./bootstrap.sh && ./configure CFLAGS="-g -ggdb" --with-pic --prefix=/usr && make -j`nproc --all` && make install
 RUN chmod -R +x /usr/src/AiSwitch && cd /usr/src/AiSwitch && ./bootstrap.sh -j && ./configure && make -j`nproc` && make install
+RUN mv /usr/local/freeswitch/conf /usr/local/freeswitch/.conf
 
 
 FROM debian:bullseye AS SecondBuildStep
@@ -81,21 +82,21 @@ EXPOSE 8021/tcp \
 
 # Volumes
 ## Freeswitch Configuration ## Tmp so we can get core dumps out
-VOLUME ["/usr/local/freeswitch/conf"] \ 
-    ["/tmp"]
+VOLUME ["/usr/local/freeswitch/conf"]
+VOLUME ["/tmp"]
 
 
 # Limits Configuration
 COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
-SHELL       ["/bin/bash"]
-HEALTHCHECK --interval=15s --timeout=5s \
-    CMD  fs_cli -x status | grep -q ^UP || exit 1
+# SHELL       ["/bin/bash"]
+# HEALTHCHECK --interval=15s --timeout=5s \
+#     CMD  fs_cli -x status | grep -q ^UP || exit 1
 
 # copy entrypoint
-COPY docker-entrypoint.sh /
-# set entrypoint
-ENTRYPOINT ["/docker-entrypoint.sh"]
-# set args
-CMD ["freeswitch"]
+# COPY docker-entrypoint.sh /
+# # set entrypoint
+# ENTRYPOINT ["/docker-entrypoint.sh"]
+# # set args
+# CMD ["freeswitch"]
