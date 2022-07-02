@@ -31,18 +31,18 @@ EXPOSE 8021/tcp \
     16384-32768/udp
 
 
-# Volumes
-## Freeswitch Configuration ## Tmp so we can get core dumps out
-VOLUME ["/usr/local/freeswitch/conf"]
-VOLUME ["/tmp"]
-
-
-# Limits Configuration
-COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 # copy config
 COPY --from=icerleer/aisbase:latest /usr/local/freeswitch/.conf /usr/local/freeswitch/conf
 
-# Healthcheck to make sure the service is running
+# Volumes
+## Freeswitch Configuration ## Tmp so we can get core dumps out
+# VOLUME ["/usr/local/freeswitch/conf"]
+# VOLUME ["/tmp"]
+
+# # Limits Configuration
+# COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
+
+# # Healthcheck to make sure the service is running
 # SHELL       ["/bin/bash"]
 # HEALTHCHECK --interval=15s --timeout=5s \
 #     CMD  fs_cli -x status | grep -q ^UP || exit 1
