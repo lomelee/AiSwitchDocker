@@ -1,4 +1,4 @@
-name: AiSwitch master build docker image
+name: build AiSwitch docker image
 
 # push tag 时触发执行
 on:
@@ -36,5 +36,7 @@ jobs:
           context: .
           push: true
           # $(date +%s)
-          tags: icerleer/aiswitch:latest
+          tags: |
+            icerleer/aiswitch:latest
+            icerleer/aiswitch:$(date +%s)
 
