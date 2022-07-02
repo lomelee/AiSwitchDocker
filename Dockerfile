@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y locales \
 ENV LANG en_US.utf8
 
 # copy config
-COPY --from=icerleer/aisbase:latest /usr/local/freeswitch/.conf /usr/local/freeswitch/conf
+RUN mv /usr/local/freeswitch/.conf /usr/local/freeswitch/conf 
 
 ## Ports
 # Open the container up to the world.
