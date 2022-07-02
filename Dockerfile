@@ -19,20 +19,19 @@ RUN apt-get update && apt-get install -y locales \
     && rm -rf /var/lib/apt/lists/*
 ENV LANG en_US.utf8
 
+# copy config
+COPY --from=icerleer/aisbase:latest /usr/local/freeswitch/.conf /usr/local/freeswitch/conf
+
 ## Ports
 # Open the container up to the world.
 ### 8021 fs_cli, 5060 5061 5080 5081 sip and sips, 64535-65535 rtp
-EXPOSE 8021/tcp \ 
-    5060/tcp 5060/udp 5080/tcp 5080/udp \
-    5061/tcp 5061/udp 5081/tcp 5081/udp \
-    7443/tcp \
-    5070/udp 5070/tcp \
-    64535-65535/udp \
-    16384-32768/udp
-
-
-# copy config
-COPY --from=icerleer/aisbase:latest /usr/local/freeswitch/.conf /usr/local/freeswitch/conf
+# EXPOSE 8021/tcp \ 
+#     5060/tcp 5060/udp 5080/tcp 5080/udp \
+#     5061/tcp 5061/udp 5081/tcp 5081/udp \
+#     7443/tcp \
+#     5070/udp 5070/tcp \
+#     64535-65535/udp \
+#     16384-32768/udp
 
 # Volumes
 ## Freeswitch Configuration ## Tmp so we can get core dumps out
