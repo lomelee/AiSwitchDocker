@@ -57,6 +57,10 @@ COPY --from=FirstBuildStep /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 RUN ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
     && ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/
 
+# set timezone
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # set time locale
 RUN apt-get update && apt-get install -y locales \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
