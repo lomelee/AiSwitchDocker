@@ -90,13 +90,13 @@ VOLUME ["/tmp"]
 COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
-# SHELL       ["/bin/bash"]
-# HEALTHCHECK --interval=15s --timeout=5s \
-#     CMD  fs_cli -x status | grep -q ^UP || exit 1
+SHELL       ["/bin/bash"]
+HEALTHCHECK --interval=15s --timeout=5s \
+    CMD  fs_cli -x status | grep -q ^UP || exit 1
 
 # copy entrypoint
-# COPY docker-entrypoint.sh /
-# # set entrypoint
-# ENTRYPOINT ["/docker-entrypoint.sh"]
-# # set args
-# CMD ["freeswitch"]
+COPY docker-entrypoint.sh /
+# set entrypoint
+ENTRYPOINT ["/docker-entrypoint.sh"]
+# set args
+CMD ["freeswitch"]
