@@ -15,7 +15,7 @@ if [ "$1" = 'freeswitch' ]; then
         done
     fi
     
-    exec freeswitch -nonat -c
+    exec freeswitch -c
 fi
 
 exec "$@"
