@@ -31,7 +31,7 @@ ENV LANG en_US.utf8
 ## 5070 (SIP for 'NAT' Profile)
 ## 16384-32768/udp (For RTP)
 ## 5066, 7443 (ws and wss)
-EXPOSE 5060/tcp 5060/udp
+EXPOSE 21010/tcp 21010/udp
 
 # Volumes
 ## Freeswitch Configuration 
