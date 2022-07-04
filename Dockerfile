@@ -31,6 +31,7 @@ ENV LANG en_US.utf8
 ## 5070 (SIP for 'NAT' Profile)
 ## 16384-32768/udp (For RTP)
 ## 5066, 7443 (ws and wss)
+## ESL port 21014
 EXPOSE 21010/tcp 21010/udp
 
 # Volumes
@@ -45,7 +46,7 @@ COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 # Healthcheck to make sure the service is running
 SHELL       ["/bin/bash"]
 HEALTHCHECK --interval=15s --timeout=5s \
-    CMD  fs_cli -x status | grep -q ^UP || exit 1
+    CMD  fs_cli -P21014 -x status | grep -q ^UP || exit 1
 
 # copy entrypoint
 COPY docker-entrypoint.sh /
