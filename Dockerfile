@@ -25,7 +25,7 @@ ENV LANG en_US.utf8
 
 ## Ports
 # Open the container up to the world.
-### 8021 ESL, 
+## 8021 ESL, 
 ## 5060 (SIP for default Internal Profile)
 ## 5080 (SIP for external Profile)
 ## 5070 (SIP for 'NAT' Profile)
