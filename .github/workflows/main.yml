@@ -6,7 +6,7 @@ on:
  
 jobs:
   build:
-    # 运行在那个虚拟机之上
+    # 运行在哪个虚拟机之上
     runs-on: ubuntu-latest
     steps:
       # 获取dockerfile项目
