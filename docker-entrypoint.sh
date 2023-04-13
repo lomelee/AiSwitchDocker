@@ -4,9 +4,31 @@ set -e
 # Source docker-entrypoint.sh:
 if [ "$1" = 'freeswitch' ]; then
     # 如果是外部映射的配置文件目录，那么拷贝初始化数据到映射的目录
-    if [ ! -f "/usr/local/aiswitch/conf/freeswitch.xml" ]; then
-        #软连接目录
-        ln -sf /usr/local/freeswitch /usr/local/aiswitch
+    if [ ! -f "/usr/local/freeswitch/conf/freeswitch.xml" ]; then
+        mkdir -p /usr/local/freeswitch/conf
+        cp -varf /usr/local/freeswitch/.aisConf/* /usr/local/freeswitch/conf/
+    fi
+
+    # 创建默认的声音文件
+    if [ ! -f "/usr/local/freeswitch/sounds" ]; then
+        mkdir -p /usr/local/freeswitch/sounds
+        cp -varf /usr/local/freeswitch/.sounds/* /usr/local/freeswitch/sounds/
+    fi
+
+    # 创建默认的脚本文件
+    if [ ! -f "/usr/local/freeswitch/scripts" ]; then
+        mkdir -p /usr/local/freeswitch/scripts
+        cp -varf /usr/local/freeswitch/.scripts/* /usr/local/freeswitch/scripts/
+    fi
+
+    # 创建默认的录音文件夹
+    if [ ! -f "/usr/local/freeswitch/recordings" ]; then
+        mkdir -p /usr/local/freeswitch/recordings
+    fi
+
+    # 创建默认的日志文件
+    if [ ! -f "/usr/local/freeswitch/log" ]; then
+        mkdir -p /usr/local/freeswitch/log
     fi
     
     if [ -d /docker-entrypoint.d ]; then
