@@ -41,7 +41,7 @@ VOLUME ["/usr/local/freeswitch/conf"]
 # VOLUME ["Tmp"]
 
 # Limits Configuration
-COPY  build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
+COPY build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
 SHELL       ["/bin/bash"]
