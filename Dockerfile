@@ -2,22 +2,21 @@ FROM debian:bullseye
 
 #copy lib and bin
 COPY --from=icerleer/aisbase:latest /usr/lib/lib* /usr/lib/
-COPY --from=icerleer/aisbase:latest /usr/local/freeswitch /usr/local/freeswitch
 COPY --from=icerleer/aisbase:latest /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 COPY --from=icerleer/aisbase:latest /lib/x86_64-linux-gnu /lib/x86_64-linux-gnu
-
-# set file link
-RUN ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
-    && ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/
+COPY --from=icerleer/aisbase:latest /usr/local/freeswitch /usr/local/freeswitch
 
 # set timezone
 ENV TZ=Asia/Shanghai
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# set time locale
-RUN apt-get update && apt-get install -y locales \
+# set file link
+RUN ln -sf /usr/local/freeswitch/bin/freeswitch /usr/bin/ \
+    && ln -sf /usr/local/freeswitch/bin/fs_cli /usr/bin/ \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+    && apt-get update && apt-get install -y locales \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
     && rm -rf /var/lib/apt/lists/*
+
+# set language chat-set
 ENV LANG en_US.utf8
 
 # copy config
