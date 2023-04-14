@@ -4,6 +4,8 @@ FROM debian:bullseye AS firstStep
 COPY --from=icerleer/aisbase:latest /usr/lib/lib* /usr/lib/ 
 COPY --from=icerleer/aisbase:latest /usr/lib/x86_64-linux-gnu /usr/lib/x86_64-linux-gnu
 COPY --from=icerleer/aisbase:latest /lib/x86_64-linux-gnu /lib/x86_64-linux-gnu
+COPY --from=icerleer/aisbase:latest /usr/local/apr /usr/local/apr
+COPY --from=icerleer/aisbase:latest /usr/local/unimrcp /usr/local/unimrcp
 COPY --from=icerleer/aisbase:latest /usr/local/freeswitch /usr/local/freeswitch
 
 # set file link
