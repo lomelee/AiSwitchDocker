@@ -37,7 +37,8 @@ if [ "$1" = 'freeswitch' ]; then
         done
     fi
     
-    exec freeswitch -c -nonat
+    # exec freeswitch -nc -nonat
 fi
-
-exec "$@"
+# exec freeswitch -nc -nonat
+# 执行参数
+#exec "$@"
