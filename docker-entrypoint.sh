@@ -10,30 +10,30 @@ if [ "$1" = 'freeswitch' ]; then
     fi
 
     # 创建默认的声音文件
-    if [ ! -f "/usr/local/freeswitch/sounds" ]; then
+    if [ ! -e "/usr/local/freeswitch/sounds" ]; then
         mkdir -p /usr/local/freeswitch/sounds
         cp -arf /usr/local/freeswitch/.sounds/* /usr/local/freeswitch/sounds/
     fi
 
     # 创建默认的脚本文件
-    if [ ! -f "/usr/local/freeswitch/scripts" ]; then
+    if [ ! -e "/usr/local/freeswitch/scripts" ]; then
         mkdir -p /usr/local/freeswitch/scripts
         cp -arf /usr/local/freeswitch/.scripts/* /usr/local/freeswitch/scripts/
     fi
 
     # 创建默认的ASR语法文件夹
-    if [ ! -f "/usr/local/freeswitch/grammar" ]; then
+    if [ ! -e "/usr/local/freeswitch/grammar" ]; then
         mkdir -p /usr/local/freeswitch/grammar
         cp -arf /usr/local/freeswitch/.grammar/* /usr/local/freeswitch/grammar/
     fi
 
     # 创建默认的录音文件夹
-    if [ ! -f "/usr/local/freeswitch/recordings" ]; then
+    if [ ! -e "/usr/local/freeswitch/recordings" ]; then
         mkdir -p /usr/local/freeswitch/recordings
     fi
 
     # 创建默认的日志文件
-    if [ ! -f "/usr/local/freeswitch/log" ]; then
+    if [ ! -e "/usr/local/freeswitch/log" ]; then
         mkdir -p /usr/local/freeswitch/log
     fi
     
