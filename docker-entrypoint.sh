@@ -24,6 +24,7 @@ if [ "$1" = 'freeswitch' ]; then
     # 创建默认的ASR语法文件夹
     if [ ! -f "/usr/local/freeswitch/grammar" ]; then
         mkdir -p /usr/local/freeswitch/grammar
+        cp -arf /usr/local/freeswitch/.grammar/* /usr/local/freeswitch/grammar/
     fi
 
     # 创建默认的录音文件夹
