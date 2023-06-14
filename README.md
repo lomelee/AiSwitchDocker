@@ -8,4 +8,4 @@
 
 ### 3、2023-04-15 不在设置针对 freeswitch 用户的 linux core 配置
 
-### 4、2023-06-13 更新aisScript
+### 4、2023-06-13 更新aisScript目录
