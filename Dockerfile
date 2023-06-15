@@ -22,9 +22,6 @@ RUN apt-get update && apt-get install -y locales wget \
     && rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.utf8
 
-# copy config
-# RUN mv /usr/local/freeswitch/.conf /usr/local/freeswitch/conf
-
 ## Ports
 # Open the container up to the world.
 ## 8021 ESL, 
@@ -43,7 +40,7 @@ VOLUME ["/usr/local/freeswitch/conf"]
 # VOLUME ["Tmp"]
 
 # Limits Configuration
-# COPY build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
+COPY build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
 
 # Healthcheck to make sure the service is running
 # SHELL       ["/bin/bash"]
