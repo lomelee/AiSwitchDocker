@@ -22,22 +22,13 @@ RUN apt-get update && apt-get install -y locales wget \
     && rm -rf /var/lib/apt/lists/*
 ENV LANG=en_US.utf8
 
-## Ports
-# Open the container up to the world.
-## 8021 ESL, 
-## 5060 (SIP for default Internal Profile)
-## 5080 (SIP for external Profile)
-## 5070 (SIP for 'NAT' Profile)
-## 16384-32768/udp (For RTP)
-## 5066, 7443 (ws and wss)
+## 部署时使用host网络配置，不需要预设映射端口
 ## ESL port 21014
-EXPOSE 21010/tcp 21010/udp
+#EXPOSE 21010/tcp 21010/udp 21012/tcp 21012/udp
 
 # Volumes
 ## Freeswitch Configuration 
 VOLUME ["/usr/local/freeswitch/conf"]
-## Tmp so we can get core dumps out
-# VOLUME ["Tmp"]
 
 # Limits Configuration
 COPY build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
