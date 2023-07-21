@@ -31,7 +31,7 @@ ENV LANG=en_US.utf8
 VOLUME ["/usr/local/freeswitch/conf"]
 
 # Limits Configuration
-COPY build/AiSwitch.limits.conf /etc/security/limits.d/freeswitch.limits.conf
+COPY build/aiswitch.limits.conf /etc/security/limits.d/
 
 # Healthcheck to make sure the service is running
 # SHELL       ["/bin/bash"]
@@ -43,4 +43,4 @@ COPY docker-entrypoint.sh /
 # set entrypoint
 ENTRYPOINT ["/docker-entrypoint.sh"]
 # set args
-CMD ["freeswitch"]
+CMD ["aiswitch"]

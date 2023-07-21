@@ -2,7 +2,7 @@
 set -e
 
 # Source docker-entrypoint.sh:
-if [ "$1" = 'freeswitch' ]; then
+if [ "$1" = 'aiswitch' ]; then
     # 如果是外部映射的配置文件目录，那么拷贝初始化数据到映射的目录
     if [ ! -f "/usr/local/freeswitch/conf/freeswitch.xml" ]; then
         mkdir -p /usr/local/freeswitch/conf
